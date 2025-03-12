@@ -1,66 +1,122 @@
 @import 'tailwindcss';
 @import '../../vendor/livewire/flux/dist/flux.css';
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600&display=swap');
 
 @source "../views";
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../vendor/livewire/flux-pro/stubs/**/*.blade.php';
 @source '../../vendor/livewire/flux/stubs/**/*.blade.php';
 
+/* Dark Mode */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Variables de Tema */
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Quicksand', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
-    --color-zinc-50: #fafafa;
-    --color-zinc-100: #f5f5f5;
-    --color-zinc-200: #e5e5e5;
-    --color-zinc-300: #d4d4d4;
-    --color-zinc-400: #a3a3a3;
-    --color-zinc-500: #737373;
-    --color-zinc-600: #525252;
-    --color-zinc-700: #404040;
-    --color-zinc-800: #262626;
-    --color-zinc-900: #171717;
-    --color-zinc-950: #0a0a0a;
+    --color-primary: #42A38B; /* Teal */
+    --color-secondary: #FF5F51; /* Coral */
+    --color-dark: #2D3748;
+    --color-light: #F4F4F9;
+    --color-background: rgba(66, 163, 139, 0.1);
+    --color-yellow: #fbbf24;
+    --color-white: #ffffff;
 
-    --color-accent: var(--color-neutral-800);
-    --color-accent-content: var(--color-neutral-800);
+    --color-accent: var(--color-primary);
+    --color-accent-content: var(--color-primary);
     --color-accent-foreground: var(--color-white);
 }
 
+/* Modo Oscuro con Acentos Teal */
 @layer theme {
     .dark {
-        --color-accent: var(--color-white);
+        --color-background: #1A202C;
+        --color-dark: #CBD5E0;
+        --color-light: #2D3748;
+        --color-accent: #42A38B; /* Teal como acento */
         --color-accent-content: var(--color-white);
-        --color-accent-foreground: var(--color-neutral-800);
+        --color-accent-foreground: var(--color-dark);
     }
 }
 
+/* Base */
 @layer base {
-
     *,
     ::after,
     ::before,
     ::backdrop,
     ::file-selector-button {
-        border-color: var(--color-gray-200, currentColor);
+        border-color: var(--color-light, currentColor);
+        font-family: var(--font-sans);
+    }
+
+    body {
+        background-color: var(--color-background);
+        color: var(--color-dark);
     }
 }
 
+/* Formularios Flux */
 [data-flux-field] {
     @apply grid gap-2;
 }
 
 [data-flux-label] {
-    @apply  !mb-0 !leading-tight;
+    @apply text-sm font-semibold text-dark;
 }
 
 input:focus[data-flux-control],
 textarea:focus[data-flux-control],
 select:focus[data-flux-control] {
-    @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
+    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
 }
 
-/* \[:where(&)\]:size-4 {
-    @apply size-4;
-} */
+/* Estilos Específicos para Dark Mode */
+.dark body {
+    background-color: var(--color-background);
+    color: var(--color-dark);
+}
+
+.dark [data-flux-label] {
+    @apply text-white;
+}
+
+.dark input:focus[data-flux-control],
+.dark textarea:focus[data-flux-control],
+.dark select:focus[data-flux-control] {
+    @apply ring-teal-400;
+}
+
+/* Botones con Acento Teal */
+button {
+    @apply bg-accent text-white font-semibold py-2 px-4 rounded-md transition;
+}
+
+button:hover {
+    @apply bg-teal-600;
+}
+
+.dark button {
+    @apply bg-teal-500 text-dark;
+}
+
+.dark button:hover {
+    @apply bg-teal-400;
+}
+
+/* Links con Efecto */
+a {
+    @apply text-accent font-medium transition;
+}
+
+a:hover {
+    @apply text-teal-600;
+}
+
+.dark a {
+    @apply text-teal-400;
+}
+
+.dark a:hover {
+    @apply text-teal-300;
+}
